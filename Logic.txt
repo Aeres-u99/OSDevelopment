@@ -1,0 +1,61 @@
+
+For-loops:
+
+For-loop in C:
+
+for(int x = 0; x<=3; x++)
+{
+    //Do something!
+}
+
+The same loop in 8086 assembler:
+
+        xor cx,cx   ; cx-register is the counter, set to 0
+loop1   nop         ; Whatever you wanna do goes here, should not change cx
+        inc cx      ; Increment
+        cmp cx,3    ; Compare cx to the limit
+        jle loop1   ; Loop while less or equal
+
+That is the loop if you need to access your index (cx). If you just wanna to something 0-3=4 times but you do not need the index, this would be easier:
+
+        mov cx,4    ; 4 iterations
+loop1   nop         ; Whatever you wanna do goes here, should not change cx
+        loop loop1  ; loop instruction decrements cx and jumps to label if not 0
+
+If you just want to perform a very simple instruction a constant amount of times, you could also use an assembler-directive which will just hardcore that instruction
+
+times 4 nop
+
+Do-while-loops
+
+Do-while-loop in C:
+
+int x=1;
+do{
+    //Do something!
+}
+while(x==1)
+
+The same loop in assembler:
+
+        mov ax,1
+loop1   nop         ; Whatever you wanna do goes here
+        cmp ax,1    ; Check wether cx is 1
+        je loop1    ; And loop if equal
+
+While-loops
+
+While-loop in C:
+
+while(x==1){
+    //Do something
+}
+
+The same loop in assembler:
+
+        jmp loop1   ; Jump to condition first
+cloop1  nop         ; Execute the content of the loop
+loop1   cmp ax,1    ; Check the condition
+        je cloop1   ; Jump to content of the loop if met
+
+For the for-loops you should take the cx-register because it is pretty much standard. For the other loop conditions you can take a register of your liking. Of course replace the no-operation instruction with all the instructions you wanna perform in the loop.
